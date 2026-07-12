@@ -490,6 +490,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_manage_vendor: { Args: { p_vendor_id: string }; Returns: boolean }
       can_view_order: { Args: { target_order_id: string }; Returns: boolean }
       health_check: { Args: never; Returns: Json }
       is_admin: { Args: never; Returns: boolean }

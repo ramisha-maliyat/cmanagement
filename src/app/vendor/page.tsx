@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 
@@ -39,14 +40,21 @@ export default async function VendorDashboardPage() {
 
       <div className="mt-8 grid gap-5 md:grid-cols-3">
         <section className="rounded-xl bg-white p-6 shadow-sm">
-          <h2 className="font-semibold text-slate-900">
-            Canteens
-          </h2>
+  <h2 className="font-semibold text-slate-900">
+    Canteens
+  </h2>
 
-          <p className="mt-2 text-sm text-slate-600">
-            Create and manage business locations in Phase 6.
-          </p>
-        </section>
+  <p className="mt-2 text-sm text-slate-600">
+    Create and manage your business locations.
+  </p>
+
+  <Link
+    href="/vendor/canteens"
+    className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
+  >
+    Manage canteens →
+  </Link>
+</section>
 
         <section className="rounded-xl bg-white p-6 shadow-sm">
           <h2 className="font-semibold text-slate-900">
