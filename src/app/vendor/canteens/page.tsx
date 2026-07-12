@@ -164,6 +164,12 @@ export default async function VendorCanteensPage({
 
               <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row">
                 <Link
+                  href={`/vendor/canteens/${canteen.id}/menu`}
+                  className="rounded-lg bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-emerald-700"
+                >
+                  Manage menu
+                </Link>
+                <Link
                   href={`/vendor/canteens/${canteen.id}/edit`}
                   className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50"
                 >
