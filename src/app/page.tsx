@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-100 px-6">
@@ -7,28 +9,28 @@ export default function HomePage() {
         </p>
 
         <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-          Welcome to Canteen Management
+          Welcome to CManagement
         </h1>
 
         <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-slate-600">
-          Browse canteens, order food and manage menus from one simple
-          platform.
+          Browse canteens, order food and manage menus from one
+          simple platform.
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <button
-            type="button"
+          <Link
+            href="/register"
             className="rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700"
           >
-            Browse Menu
-          </button>
+            Create account
+          </Link>
 
-          <button
-            type="button"
+          <Link
+            href="/login"
             className="rounded-lg border border-slate-300 px-6 py-3 font-semibold text-slate-700 hover:bg-slate-50"
           >
-            Vendor Login
-          </button>
+            Sign in
+          </Link>
         </div>
       </section>
     </main>
