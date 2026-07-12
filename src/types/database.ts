@@ -1,4 +1,4 @@
-export type Json =
+﻿export type Json =
   | string
   | number
   | boolean
@@ -423,6 +423,9 @@ export type Database = {
           logo_url: string | null
           owner_id: string
           phone: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
           slug: string
           status: Database["public"]["Enums"]["vendor_status"]
           updated_at: string
@@ -439,6 +442,9 @@ export type Database = {
           logo_url?: string | null
           owner_id: string
           phone?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug: string
           status?: Database["public"]["Enums"]["vendor_status"]
           updated_at?: string
@@ -455,6 +461,9 @@ export type Database = {
           logo_url?: string | null
           owner_id?: string
           phone?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["vendor_status"]
           updated_at?: string
@@ -463,6 +472,13 @@ export type Database = {
           {
             foreignKeyName: "vendors_owner_id_fkey"
             columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vendors_reviewed_by_fkey"
+            columns: ["reviewed_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -478,6 +494,26 @@ export type Database = {
       health_check: { Args: never; Returns: Json }
       is_admin: { Args: never; Returns: boolean }
       owns_vendor: { Args: { target_vendor_id: string }; Returns: boolean }
+      review_vendor_application: {
+        Args: {
+          p_decision: string
+          p_review_notes?: string
+          p_vendor_id: string
+        }
+        Returns: undefined
+      }
+      submit_vendor_application: {
+        Args: {
+          p_address: string
+          p_business_name: string
+          p_currency_code: string
+          p_description: string
+          p_email: string
+          p_phone: string
+          p_slug: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "customer" | "vendor" | "admin"
