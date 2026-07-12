@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+
+import { CartProvider } from "@/features/cart/cart-provider";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,6 +9,7 @@ export const metadata: Metadata = {
     default: "CManagement",
     template: "%s | CManagement",
   },
+
   description:
     "A multi-vendor canteen menu, ordering and management platform.",
 };
@@ -17,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }

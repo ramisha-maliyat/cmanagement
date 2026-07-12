@@ -13,10 +13,23 @@ export default function CustomerDashboardPage() {
       </p>
 
       <div className="mt-8 grid gap-5 md:grid-cols-3">
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-          <h2 className="font-semibold text-slate-900">
-            Browse menu
-          </h2>
+<section className="rounded-xl bg-white p-6 shadow-sm">
+  <h2 className="font-semibold text-slate-900">
+    Browse menu
+  </h2>
+
+  <p className="mt-2 text-sm text-slate-600">
+    View available vendors, canteens and
+    current menu items.
+  </p>
+
+  <Link
+    href="/vendors"
+    className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
+  >
+    Browse canteens →
+  </Link>
+
 
           <p className="mt-2 text-sm text-slate-600">
             Public menu browsing will be added soon.
