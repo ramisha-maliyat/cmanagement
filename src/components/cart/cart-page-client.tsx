@@ -42,8 +42,7 @@ export function CartPageClient() {
         </h1>
 
         <p className="mt-2 text-slate-600">
-          Browse available canteens and add
-          food or drinks.
+          Browse available canteens and add food or drinks.
         </p>
 
         <Link
@@ -69,8 +68,7 @@ export function CartPageClient() {
           </h1>
 
           <p className="mt-2 text-slate-600">
-            {cart.vendorName} ·{" "}
-            {cart.canteenName}
+            {cart.vendorName} · {cart.canteenName}
           </p>
         </div>
 
@@ -87,111 +85,88 @@ export function CartPageClient() {
         <section className="overflow-hidden rounded-xl bg-white shadow-sm">
           <div className="divide-y divide-slate-200">
             {cart.items.map((item) => {
-              const atMaximumStock =
+              const maximumReached =
                 item.trackStock &&
-                item.quantity >=
-                  item.stockQuantity;
+                item.quantity >= item.stockQuantity;
 
               return (
                 <article
                   key={item.menuItemId}
                   className="p-5 sm:p-6"
                 >
-                  <div className="flex gap-4">
-                    {item.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        className="h-20 w-20 rounded-lg object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-xs text-slate-500">
-                        No image
-                      </div>
-                    )}
+                  <div className="flex items-start justify-between gap-5">
+                    <div>
+                      <h2 className="font-bold text-slate-900">
+                        {item.name}
+                      </h2>
 
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                          <h2 className="font-bold text-slate-900">
-                            {item.name}
-                          </h2>
-
-                          <p className="mt-1 text-sm text-emerald-700">
-                            {formatPrice(
-                              item.price,
-                              cart.currencyCode,
-                            )}{" "}
-                            each
-                          </p>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            removeItem(
-                              item.menuItemId,
-                            )
-                          }
-                          className="text-sm font-semibold text-red-600 hover:underline"
-                        >
-                          Remove
-                        </button>
-                      </div>
-
-                      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-                        <div className="flex items-center rounded-lg border border-slate-300">
-                          <button
-                            type="button"
-                            aria-label={`Decrease ${item.name} quantity`}
-                            onClick={() =>
-                              updateQuantity(
-                                item.menuItemId,
-                                item.quantity - 1,
-                              )
-                            }
-                            className="px-4 py-2 text-lg text-slate-700 hover:bg-slate-50"
-                          >
-                            −
-                          </button>
-
-                          <span className="min-w-10 text-center font-semibold">
-                            {item.quantity}
-                          </span>
-
-                          <button
-                            type="button"
-                            aria-label={`Increase ${item.name} quantity`}
-                            disabled={atMaximumStock}
-                            onClick={() =>
-                              updateQuantity(
-                                item.menuItemId,
-                                item.quantity + 1,
-                              )
-                            }
-                            className="px-4 py-2 text-lg text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300"
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        <p className="font-bold text-slate-900">
-                          {formatPrice(
-                            item.price *
-                              item.quantity,
-                            cart.currencyCode,
-                          )}
-                        </p>
-                      </div>
-
-                      {atMaximumStock && (
-                        <p className="mt-2 text-xs text-amber-700">
-                          Maximum available stock reached.
-                        </p>
-                      )}
+                      <p className="mt-1 text-sm text-emerald-700">
+                        {formatPrice(
+                          item.price,
+                          cart.currencyCode,
+                        )}{" "}
+                        each
+                      </p>
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeItem(item.menuItemId)
+                      }
+                      className="text-sm font-semibold text-red-600 hover:underline"
+                    >
+                      Remove
+                    </button>
                   </div>
+
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-center rounded-lg border border-slate-300">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateQuantity(
+                            item.menuItemId,
+                            item.quantity - 1,
+                          )
+                        }
+                        className="px-4 py-2 text-lg hover:bg-slate-50"
+                      >
+                        −
+                      </button>
+
+                      <span className="min-w-10 text-center font-semibold">
+                        {item.quantity}
+                      </span>
+
+                      <button
+                        type="button"
+                        disabled={maximumReached}
+                        onClick={() =>
+                          updateQuantity(
+                            item.menuItemId,
+                            item.quantity + 1,
+                          )
+                        }
+                        className="px-4 py-2 text-lg hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <p className="font-bold text-slate-900">
+                      {formatPrice(
+                        item.price * item.quantity,
+                        cart.currencyCode,
+                      )}
+                    </p>
+                  </div>
+
+                  {maximumReached && (
+                    <p className="mt-2 text-xs text-amber-700">
+                      Maximum available stock reached.
+                    </p>
+                  )}
                 </article>
               );
             })}
@@ -203,7 +178,7 @@ export function CartPageClient() {
             Order summary
           </h2>
 
-          <div className="mt-5 flex items-center justify-between border-b border-slate-200 pb-4">
+          <div className="mt-5 flex justify-between border-b border-slate-200 pb-4">
             <span className="text-slate-600">
               Subtotal
             </span>
@@ -215,12 +190,6 @@ export function CartPageClient() {
               )}
             </span>
           </div>
-
-          <p className="mt-4 text-xs leading-5 text-slate-500">
-            Prices, stock and availability will
-            be checked again by the server before
-            an order is created.
-          </p>
 
           <button
             type="button"
