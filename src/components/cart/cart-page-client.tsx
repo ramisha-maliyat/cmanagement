@@ -191,13 +191,12 @@ export function CartPageClient() {
             </span>
           </div>
 
-          <button
-            type="button"
-            disabled
-            className="mt-5 w-full cursor-not-allowed rounded-lg bg-slate-300 px-5 py-3 font-semibold text-white"
-          >
-            Checkout available in Phase 9
-          </button>
+<Link
+  href="/customer/checkout"
+  className="mt-5 block w-full rounded-lg bg-emerald-600 px-5 py-3 text-center font-semibold text-white hover:bg-emerald-700"
+>
+  Proceed to checkout
+</Link>
 
           <Link
             href={menuHref}

@@ -13,37 +13,38 @@ export default function CustomerDashboardPage() {
       </p>
 
       <div className="mt-8 grid gap-5 md:grid-cols-3">
-<section className="rounded-xl bg-white p-6 shadow-sm">
-  <h2 className="font-semibold text-slate-900">
-    Browse menu
-  </h2>
-
-  <p className="mt-2 text-sm text-slate-600">
-    View available vendors, canteens and
-    current menu items.
-  </p>
-
-  <Link
-    href="/vendors"
-    className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
-  >
-    Browse canteens →
-  </Link>
-
+        <section className="rounded-xl bg-white p-6 shadow-sm">
+          <h2 className="font-semibold text-slate-900">
+            Browse menu
+          </h2>
 
           <p className="mt-2 text-sm text-slate-600">
-            Public menu browsing will be added soon.
+            View available vendors, canteens and current menu items.
           </p>
+
+          <Link
+            href="/vendors"
+            className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
+          >
+            Browse canteens →
+          </Link>
         </section>
 
         <section className="rounded-xl bg-white p-6 shadow-sm">
           <h2 className="font-semibold text-slate-900">
-            Current orders
+            My orders
           </h2>
 
           <p className="mt-2 text-sm text-slate-600">
-            You currently have no active orders.
+            Track current orders and view your order history.
           </p>
+
+          <Link
+            href="/customer/orders"
+            className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
+          >
+            View my orders →
+          </Link>
         </section>
 
         <section className="rounded-xl bg-white p-6 shadow-sm">

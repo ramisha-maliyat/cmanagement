@@ -235,6 +235,7 @@ export type Database = {
         Row: {
           cancelled_at: string | null
           canteen_id: string
+          canteen_name: string
           completed_at: string | null
           created_at: string
           currency_code: string
@@ -257,10 +258,12 @@ export type Database = {
           total_amount: number
           updated_at: string
           vendor_id: string
+          vendor_name: string
         }
         Insert: {
           cancelled_at?: string | null
           canteen_id: string
+          canteen_name?: string
           completed_at?: string | null
           created_at?: string
           currency_code?: string
@@ -283,10 +286,12 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           vendor_id: string
+          vendor_name?: string
         }
         Update: {
           cancelled_at?: string | null
           canteen_id?: string
+          canteen_name?: string
           completed_at?: string | null
           created_at?: string
           currency_code?: string
@@ -309,6 +314,7 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           vendor_id?: string
+          vendor_name?: string
         }
         Relationships: [
           {
@@ -492,6 +498,22 @@ export type Database = {
     Functions: {
       can_manage_vendor: { Args: { p_vendor_id: string }; Returns: boolean }
       can_view_order: { Args: { target_order_id: string }; Returns: boolean }
+      create_order: {
+        Args: {
+          p_canteen_id: string
+          p_customer_name: string
+          p_customer_phone: string
+          p_items: Json
+          p_notes: string
+          p_payment_method: Database["public"]["Enums"]["payment_method"]
+          p_pickup_time: string
+        }
+        Returns: {
+          order_id: string
+          order_number: string
+          total_amount: number
+        }[]
+      }
       health_check: { Args: never; Returns: Json }
       is_admin: { Args: never; Returns: boolean }
       owns_vendor: { Args: { target_vendor_id: string }; Returns: boolean }
