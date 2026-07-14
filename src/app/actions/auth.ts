@@ -38,15 +38,21 @@ function firstValidationError(
   return issues[0]?.message ?? "Check the information you entered.";
 }
 
-export async function registerAction(formData: FormData): Promise<void> {
+export async function registerAction(
+  formData: FormData,
+): Promise<void> {
   const result = registerSchema.safeParse({
     fullName: getFormValue(formData, "fullName"),
     phone: getFormValue(formData, "phone"),
     email: getFormValue(formData, "email"),
     password: getFormValue(formData, "password"),
-    confirmPassword: getFormValue(formData, "confirmPassword"),
+    confirmPassword: getFormValue(
+      formData,
+      "confirmPassword",
+    ),
   });
 
+  // Validate the submitted form before using result.data.
   if (!result.success) {
     redirectWithMessage(
       "/register",
@@ -55,34 +61,76 @@ export async function registerAction(formData: FormData): Promise<void> {
     );
   }
 
-  const { fullName, phone, email, password } = result.data;
+  const {
+    fullName,
+    phone,
+    email,
+    password,
+  } = result.data;
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${getSiteUrl()}/auth/confirm`,
-      data: {
-        full_name: fullName,
-        phone: phone || null,
-      },
-    },
-  });
+  const { data, error } =
+    await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo:
+          `${getSiteUrl()}/auth/confirm`,
 
+        data: {
+          full_name: fullName,
+          phone: phone || null,
+        },
+      },
+    });
+
+  // Check the Supabase error only after signUp has returned it.
   if (error) {
-    console.error("Registration error:", error.message);
+    console.error("Registration error:", {
+      message: error.message,
+      code: error.code,
+      status: error.status,
+    });
+
+    let errorMessage =
+      "We could not create your account. Check your details and try again.";
+
+    if (error.code === "email_address_invalid") {
+      errorMessage =
+        "Use a valid real email address. Example and test email domains may not be accepted.";
+    } else if (
+      error.code === "email_address_not_authorized"
+    ) {
+      errorMessage =
+        "Supabase cannot send a confirmation email to this address. Disable email confirmation for local testing or configure custom SMTP.";
+    } else if (
+      error.code === "over_email_send_rate_limit"
+    ) {
+      errorMessage =
+        "Too many confirmation emails have been requested. Wait before trying again.";
+    } else if (
+      error.code === "user_already_exists" ||
+      error.code === "email_exists"
+    ) {
+      errorMessage =
+        "An account already exists with this email address.";
+    } else if (
+      error.code === "weak_password"
+    ) {
+      errorMessage =
+        "Choose a stronger password.";
+    }
 
     redirectWithMessage(
       "/register",
       "error",
-      "We could not create your account. Check your details and try again.",
+      errorMessage,
     );
   }
 
   /*
-   * When email confirmation is disabled, Supabase may create
+   * If email confirmation is disabled, Supabase may create
    * a session immediately. Otherwise, the user must confirm
    * their email first.
    */
@@ -93,7 +141,6 @@ export async function registerAction(formData: FormData): Promise<void> {
 
   redirect("/check-email");
 }
-
 export async function loginAction(formData: FormData): Promise<void> {
   const result = loginSchema.safeParse({
     email: getFormValue(formData, "email"),
