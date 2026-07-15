@@ -233,6 +233,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          accepted_at: string | null
           cancelled_at: string | null
           canteen_id: string
           canteen_name: string
@@ -252,8 +253,13 @@ export type Database = {
           payment_method: Database["public"]["Enums"]["payment_method"]
           payment_status: Database["public"]["Enums"]["payment_status"]
           pickup_time: string | null
+          preparing_at: string | null
+          ready_at: string | null
+          rejected_at: string | null
+          rejection_reason: string | null
           service_fee: number
           status: Database["public"]["Enums"]["order_status"]
+          status_updated_at: string
           subtotal: number
           total_amount: number
           updated_at: string
@@ -261,6 +267,7 @@ export type Database = {
           vendor_name: string
         }
         Insert: {
+          accepted_at?: string | null
           cancelled_at?: string | null
           canteen_id: string
           canteen_name?: string
@@ -280,8 +287,13 @@ export type Database = {
           payment_method?: Database["public"]["Enums"]["payment_method"]
           payment_status?: Database["public"]["Enums"]["payment_status"]
           pickup_time?: string | null
+          preparing_at?: string | null
+          ready_at?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
           service_fee?: number
           status?: Database["public"]["Enums"]["order_status"]
+          status_updated_at?: string
           subtotal?: number
           total_amount?: number
           updated_at?: string
@@ -289,6 +301,7 @@ export type Database = {
           vendor_name?: string
         }
         Update: {
+          accepted_at?: string | null
           cancelled_at?: string | null
           canteen_id?: string
           canteen_name?: string
@@ -308,8 +321,13 @@ export type Database = {
           payment_method?: Database["public"]["Enums"]["payment_method"]
           payment_status?: Database["public"]["Enums"]["payment_status"]
           pickup_time?: string | null
+          preparing_at?: string | null
+          ready_at?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
           service_fee?: number
           status?: Database["public"]["Enums"]["order_status"]
+          status_updated_at?: string
           subtotal?: number
           total_amount?: number
           updated_at?: string
@@ -536,6 +554,18 @@ export type Database = {
           p_slug: string
         }
         Returns: string
+      }
+      update_vendor_order_status: {
+        Args: {
+          p_next_status: Database["public"]["Enums"]["order_status"]
+          p_order_id: string
+          p_rejection_reason?: string
+        }
+        Returns: {
+          changed_at: string
+          new_status: Database["public"]["Enums"]["order_status"]
+          updated_order_id: string
+        }[]
       }
     }
     Enums: {

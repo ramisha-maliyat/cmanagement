@@ -1,6 +1,4 @@
-import type {
-  OrderStatus,
-} from "@/types";
+import type { OrderStatus } from "@/types";
 
 type OrderStatusBadgeProps = {
   status: OrderStatus;
