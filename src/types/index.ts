@@ -15,6 +15,15 @@ export type MenuCategory =
 export type MenuItem =
   Database["public"]["Tables"]["menu_items"]["Row"];
 
+export type StockCheck =
+  Database["public"]["Tables"]["stock_checks"]["Row"];
+
+export type StockCheckItem =
+  Database["public"]["Tables"]["stock_check_items"]["Row"];
+
+export type StockMovement =
+  Database["public"]["Tables"]["stock_movements"]["Row"];
+
 export type Order =
   Database["public"]["Tables"]["orders"]["Row"];
 

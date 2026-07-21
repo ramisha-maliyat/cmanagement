@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/database';
 
 export async function POST(request: Request) {
   const body = await request.json();
   const { title, checked_by, items, auto_complete } = body;
 
-  // Use server service role key via environment on the server to call RPC safely
-  const supabase = createServerClient<Database>(
+  const supabase = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_KEY!,
   );
 
   const { data, error } = await supabase.rpc('create_stock_check_with_items', {

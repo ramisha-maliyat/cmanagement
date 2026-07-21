@@ -41,6 +41,23 @@ export default function AdminDashboardPage() {
 
         <section className="rounded-xl bg-white p-6 shadow-sm">
           <h2 className="font-semibold text-slate-900">
+            Stock check reports
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-600">
+            View completed and in-progress stock takes for vendor inventory.
+          </p>
+
+          <Link
+            href="/admin/stock-checks"
+            className="mt-4 inline-block font-semibold text-emerald-700 hover:underline"
+          >
+            View stock checks →
+          </Link>
+        </section>
+
+        <section className="rounded-xl bg-white p-6 shadow-sm">
+          <h2 className="font-semibold text-slate-900">
             Platform orders
           </h2>
 

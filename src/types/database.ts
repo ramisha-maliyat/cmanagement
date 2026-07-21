@@ -509,6 +509,135 @@ export type Database = {
           },
         ]
       }
+      stock_checks: {
+        Row: {
+          checked_by: string | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          status: "in_progress" | "completed"
+          title: string
+        }
+        Insert: {
+          checked_by?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          status?: "in_progress" | "completed"
+          title: string
+        }
+        Update: {
+          checked_by?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          status?: "in_progress" | "completed"
+          title?: string
+        }
+        Relationships: []
+      }
+      stock_check_items: {
+        Row: {
+          counted_quantity: number
+          created_at: string
+          difference: number
+          id: string
+          item_id: string
+          note: string | null
+          stock_check_id: string
+          system_quantity: number
+        }
+        Insert: {
+          counted_quantity: number
+          created_at?: string
+          difference?: number
+          id?: string
+          item_id: string
+          note?: string | null
+          stock_check_id: string
+          system_quantity: number
+        }
+        Update: {
+          counted_quantity?: number
+          created_at?: string
+          difference?: number
+          id?: string
+          item_id?: string
+          note?: string | null
+          stock_check_id?: string
+          system_quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_check_items_stock_check_id_fkey"
+            columns: ["stock_check_id"]
+            isOneToOne: false
+            referencedRelation: "stock_checks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_check_items_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stock_movements: {
+        Row: {
+          change: number
+          created_at: string
+          id: string
+          menu_item_id: string | null
+          new: number
+          previous: number
+          reason: string | null
+          source_id: string | null
+          source_table: string | null
+          vendor_id: string | null
+        }
+        Insert: {
+          change: number
+          created_at?: string
+          id?: string
+          menu_item_id?: string | null
+          new?: number
+          previous?: number
+          reason?: string | null
+          source_id?: string | null
+          source_table?: string | null
+          vendor_id?: string | null
+        }
+        Update: {
+          change?: number
+          created_at?: string
+          id?: string
+          menu_item_id?: string | null
+          new?: number
+          previous?: number
+          reason?: string | null
+          source_id?: string | null
+          source_table?: string | null
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -531,6 +660,21 @@ export type Database = {
           order_number: string
           total_amount: number
         }[]
+      }
+      create_stock_check_with_items: {
+        Args: {
+          p_title: string
+          p_checked_by?: string | null
+          p_items: Json
+          p_auto_complete?: boolean
+        }
+        Returns: string
+      }
+      apply_stock_check: {
+        Args: {
+          p_check_id: string
+        }
+        Returns: undefined
       }
       health_check: { Args: never; Returns: Json }
       is_admin: { Args: never; Returns: boolean }
